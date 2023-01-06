@@ -4,9 +4,12 @@ import pygame, sys
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
+        self.posx = 400
+        self.posy = 500
         self.image= pygame.Surface((500,50))
         self.image.fill((255,255,255))
-        self.rect= self.image.get_rect(center=(400,500))
+        self.rect= self.image.get_rect(center=(self.posx,self.posy))
+
 
     def update(self):
         x, y=pygame.mouse.get_pos()
