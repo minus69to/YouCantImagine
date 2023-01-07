@@ -14,6 +14,7 @@ points = 0
 gamespeed = 15
 font = pygame.font.Font('freesansbold.ttf', 20)
 
+lifes = 3
 def score():
     global points, gamespeed
     points+=1
@@ -22,7 +23,11 @@ def score():
     text = font.render("Points: "+str(points), True, (0, 0, 0))
     textRect = text.get_rect()
     textRect.topleft = (10,10)
+    text2 = font.render("Lives: "+str(lifes),True, (0,0,0))
+    text2Rect = text2.get_rect()
+    text2Rect.topleft = (700,10)
     screen.blit(text,textRect)
+    screen.blit(text2, text2Rect)
     print()
 clock = pygame.time.Clock()
 j = 0
@@ -257,7 +262,7 @@ indx = 0
 #
 #
 def main():
-    global running, runningplayer, runningplayer_group
+    global running, runningplayer, runningplayer_group, lifes
     if not running:
         runningplayer_group = pygame.sprite.Group()
         runningplayer = runningPlayer()
@@ -310,6 +315,7 @@ def main():
         # if runningplayer.rect.x>=snake.rect.x and runningplayer.rect.x<=snake.rect.x+snake.rect.width:
         #     if runningplayer.rect.y>snake.rect.y-snake.rect.width:
              pos = 3
+             lifes-= 1
              break
              #sys.exit()
     for snake in balls:
@@ -372,7 +378,7 @@ def snakers():
     sk.run()
 def mainMenu():
     global  indm, pos, mm
-
+    global running, runningplayer, runningplayer_group, lifes
     if indm == 0:
         mm = menu.Menu()
         indm = 1
@@ -383,7 +389,15 @@ def mainMenu():
 
 
 while True:
-
+    if lifes == 0:
+        sys.exit()
+        running = False
+        runningplayer.destroy()
+        pos = 0
+        snakes = []
+        coins = []
+        balls = []
+        points = 0
     if pos == 0:
         mainMenu()
     elif pos == 1:
